@@ -29,7 +29,22 @@ app.get("/", function(req, res) {
     res.render("driver", { title: "Driver", data_driver: results });
   });
 });
-
+app.get("/trans", function(req, res) {
+  console.log("GET DATA from tbl_transportation");
+  conn.query("SELECT * FROM tbl_transportasi", function(
+    error,
+    results,
+    fields
+  ) {
+    if (error) throw error;
+    // return res.send({
+    //   error: false,
+    //   message: "Data Transportasi!",
+    //   data: results
+    // });
+    res.render("driver", { title: "Transportasi", data_trans: results });
+  });
+});
 app.post("/", function(req, res) {
   var datadriver = {
     nama: req.body.nama,

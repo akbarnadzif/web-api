@@ -49,11 +49,12 @@ app.post("/", function(req, res) {
     fields
   ) {
     if (error) throw error;
-    return res.send({
-      error: false,
-      data: "Data Berhasil di masukkan!",
-      json: datatransportasi
-    });
+    // return res.send({
+    //   error: false,
+    //   data: "Data Berhasil di masukkan!",
+    //   json: datatransportasi
+    // });
+    res.redirect("/transportasi");
   });
 });
 

@@ -21,22 +21,24 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Lokasi Awal</th>
-            <th>Lokasi Tujuan</th>
-            <th>Jarak</th>
+            <th>Nama</th>
+            <th>Rating</th>
             <th>Tarif Tunai</th>
-            <th>Tarif Non Tunai</th>
+            <th>Tarif nonTunai</th>
+            <th>Jumlah Penumpang</th>
+            <th>Deskripsi</th>
           </tr>
         </thead>
         <tbody>
-          <% for(var i=0;i<data_tarif.length;i++) { %>
+          <% for(var i=0;i<data_trans.length;i++) { %>
           <tr>
-            <td><%= data_tarif[i].id_data_tarif %></td>
-            <td><%= data_tarif[i].lokasi_awal %></td>
-            <td><%= data_tarif[i].lokasi_tujuan %></td>
-            <td><%= data_tarif[i].jarak %></td>
-            <td><%= data_tarif[i].tarif_tunai %></td>
-            <td><%= data_tarif[i].tarif_nontunai %></td>
+            <td><%= data_trans[i].id_transportasi %></td>
+            <td><%= data_trans[i].nama %></td>
+            <td><%= data_trans[i].rating %></td>
+            <td><%= data_trans[i].tarif_tunai_perKm %></td>
+            <td><%= data_trans[i].tarif_nontunai_perKm %></td>
+            <td><%= data_trans[i].jumlah_penumpang %></td>
+            <td><%= data_trans[i].deskripsi %></td>
             <td>                
                 <button class="waves-effect waves-light btn">Delete</button>
               </td>
@@ -53,27 +55,31 @@
             <h4>Tambah Data <%= title %></h4>
             <br /><br />
             <div class="row">
-              <form method="POST" action="/tarif">
+              <form method="POST" action="/transportasi">
                   <div class="input-field col s12">
-                    <input name="lokasi_awal" id="lokasi_awal" type="text" class="validate" />
-                    <label for="lokasi_awal">Lokasi Awal</label>
+                    <input name="nama" id="nama" type="text" class="validate" />
+                    <label for="nama">Nama</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="lokasi_tujuan" id="lokasi_tujuan" type="text" class="validate" />
-                    <label for="lokasi_tujuan">Lokasi Tujuan</label>
+                    <input name="rating" id="rating" type="text" class="validate" />
+                    <label for="rating">Rating</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="jarak" id="jarak" type="text" class="validate" />
-                    <label for="jarak">Jarak</label>
+                    <input name="tarif_tunai_perKm" id="tarif_tunai_perKm" type="text" class="validate" />
+                    <label for="tarif_tunai_perKm">Tarif Tunai</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="tarif_tunai" id="rating_aplikasi" type="text" class="validate" />
-                    <label for="tarif_tunai">Tarif Tunai</label>
+                    <input name="tarif_nontunai_perKm" id="tarif_nontunai_perKm" type="text" class="validate" />
+                    <label for="tarif_nontunai_perKm">Tarif nonTunai</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="tarif_nontunai" id="tarif_nontunai" type="text" class="validate" />
-                    <label for="tarif_nontunai">Tarif Nontunai</label>
+                    <input name="jumlah_penumpang" id="jumlah_penumpang" type="text" class="validate" />
+                    <label for="jumlah_penumpang">Jumlah Penumpang</label>
                   </div>
+                  <div class="input-field col s12">
+                    <input name="deskripsi" id="deskripsi" type="text" class="validate" />
+                    <label for="deskripsi">Deskripsi</label>
+                      </div>
                   <div class="modal-footer">
                     <input class="modal-close waves-effect waves-green btn" type="submit" value="send"
                       >
