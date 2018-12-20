@@ -1,0 +1,21 @@
+{
+  "name": "web-api",
+  "version": "1.0.0",
+  "description": "Ini testing API untuk ojek online.",
+  "main": "app.js",
+  "scripts": {
+    "test": "testing"
+  },
+  "author": "akb-27",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "materialize-css": "^1.0.0-rc.2",
+    "method-override": "^3.0.0",
+    "moment": "^2.22.2",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.4"
+  }
+}

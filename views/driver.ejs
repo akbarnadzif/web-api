@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Input Data Driver</h1>
+      <a href="/driver" class="waves-effect waves-light btn">Data Driver</a>
+      <a href="/tarif" class="waves-effect waves-light btn">Data Tarif</a>
+      <br /><br /><br />
+      <!-- <div class="input-field col s12">
+        <div class="col s4">
+          <select>
+            <option value="" disabled selected>Choose your option</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+          <label>Pilih Jasa Penyedia</label>
+        </div>  
+        </div> -->
+      <!-- <h3>Data Tarif</h3> -->
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Usia</th>
+            <th>Rating Driver</th>
+            <th>Rating Aplikasi</th>
+            <th>Plat Nomer</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i=0;i<data_driver.length;i++) { %>
+          <tr>
+            <td><%= data_driver[i].id_data_driver %></td>
+            <td><%= data_driver[i].nama %></td>
+            <td><%= data_driver[i].usia %></td>
+            <td><%= data_driver[i].rating_driver %></td>
+            <td><%= data_driver[i].rating_aplikasi %></td>
+            <td><%= data_driver[i].plat_nomor %></td>
+            <td>
+              <button class="waves-effect waves-light btn">Delete</button>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <br />
+      <!-- <a class="waves-effect waves-light btn">Tambah</a> <br /><br /> -->
+      <!-- Modal Trigger -->
+
+      <a class="waves-effect waves-light btn modal-trigger" href="#modal1"
+        >Tambah</a
+      >
+
+      <!--
+        <button data-target="modal1" class="btn modal-trigger">Modal</button>
+      -->
+
+      <!-- Modal Structure -->
+      <div id="modal1" class="modal" style="width: 30%">
+        <div class="modal-content">
+          <h4>Tambah Data Driver</h4>
+          <br /><br />
+          <div class="row">
+            <form method="POST" action="/driver">
+                <div class="input-field col s12">
+                  <input name="nama" id="nama" type="text" class="validate" />
+                  <label for="nama">Nama</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="usia" id="usia" type="text" class="validate" />
+                  <label for="usia">Usia</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="rating_driver" id="rating_driver" type="text" class="validate" />
+                  <label for="rating_driver">Rating Driver</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="rating_aplikasi" id="rating_aplikasi" type="text" class="validate" />
+                  <label for="rating_aplikasi">Rating Aplikasi</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="plat_nomor" id="plat_nomor" type="text" class="validate" />
+                  <label for="plat_nomor">Plat Nomor</label>
+                </div>
+                <div class="modal-footer">
+                  <input class="modal-close waves-effect waves-green btn" type="submit" value="send"
+                    >
+                </div>
+            </form>
+          </div>
+        </div>
+        
+      </div>
+      <script>
+        $(document).ready(function() {
+          $(".modal").modal();
+        });
+        $(document).ready(function(){
+          $('select').formSelect();
+        });
+      </script>
+    </div>
+  </body>
+</html>
