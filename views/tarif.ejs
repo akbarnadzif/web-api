@@ -27,6 +27,7 @@
             <th>Tarif Tunai</th>
             <th>Tarif Non Tunai</th>
             <th>ID Trans</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -40,8 +41,8 @@
             <td><%= data_tarif[i].tarif_nontunai %></td>
             <td><%= data_tarif[i].id_transportasi %></td>
             <td>                
-                <button class="waves-effect waves-light btn">Delete</button>
-              </td>
+              <a href="/tarif/hapus/<%= data_tarif[i].id_data_tarif %>" class="waves-effect waves-light btn">Delete</a>
+            </td>
           </tr>
           <% } %>
         </tbody>
@@ -77,8 +78,13 @@
                     <label for="tarif_nontunai">Tarif Nontunai</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="id_transportasi" id="id_transportasi" type="text" class="validate" />
-                    <label for="id_transportasi">ID Transportasi</label>
+                    <select name="id_transportasi">
+                      <option value="" disabled selected>Pilih Transportasi</option>
+                      <% data_trans.forEach(function(data, q){ %> 
+                      <option value="<%= data.id_transportasi %>"><%= data.nama %></option>
+                      <% }) %>
+                    </select>
+                    <label>Menu Pilihan</label>
                   </div>
                   <div class="modal-footer">
                     <input class="modal-close waves-effect waves-green btn" type="submit" value="send"
@@ -91,6 +97,9 @@
         <script>
             $(document).ready(function() {
               $(".modal").modal();
+            });
+            $(document).ready(function(){
+              $('select').formSelect();
             });
           </script>
     </div>

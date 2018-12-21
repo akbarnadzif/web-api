@@ -16,16 +16,32 @@ const conn = mysql.createConnection({
 });
 conn.connect();
 
+app.get("/hapus/:id", (req, res) => {
+  conn.query(
+    "DELETE FROM tbl_data_tarif WHERE id_data_tarif=?",
+    req.params.id,
+    function(error, results, fields) {
+      if (error) throw error;
+      res.redirect("/tarif");
+    }
+  );
+});
+
 app.get("/", function(req, res) {
   console.log("Test Dashboard Tarif");
   conn.query("SELECT * FROM tbl_data_tarif", function(error, results, fields) {
     if (error) throw error;
-    // return res.send({
-    //   error: false,
-    //   data: results,
-    //   message: "Data Tarif!"
-    // });
-    res.render("tarif", { title: "Tarif", data_tarif: results });
+    conn.query("SELECT * FROM tbl_transportasi", function(
+      error1,
+      results1,
+      fields1
+    ) {
+      res.render("tarif", {
+        title: "Tarif",
+        data_tarif: results,
+        data_trans: results1
+      });
+    });
   });
 });
 
@@ -36,6 +52,7 @@ app.post("/", function(req, res) {
     jarak: req.body.jarak,
     tarif_tunai: req.body.tarif_tunai,
     tarif_nontunai: req.body.tarif_nontunai,
+    id_transportasi: req.body.id_transportasi,
     createdAt: new Date()
   };
   conn.query("INSERT INTO tbl_data_tarif SET ?", datatarif, function(
@@ -44,13 +61,6 @@ app.post("/", function(req, res) {
     fields
   ) {
     if (error) throw error;
-    // return res.send({
-    //   error: false,
-    //   data: "Data Berhasil di masukkan!",
-    //   json: datatarif
-    // });
-
-    // res.render("tarif", { data_tarif: results });
     res.redirect("/tarif");
   });
 });

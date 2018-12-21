@@ -88,7 +88,7 @@ app.post("/", function(req, res) {
   ) {
     if (error) throw error;
     conn.query(
-      `update tbl_transportasi 
+      `UPDATE tbl_transportasi 
       INNER JOIN 
       (SELECT avg(tbl_data_driver.rating_driver) rating_driver,id_transportasi from tbl_data_driver) as x 
       on x.id_transportasi = tbl_transportasi.id_transportasi 

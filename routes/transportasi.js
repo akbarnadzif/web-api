@@ -17,6 +17,17 @@ const conn = mysql.createConnection({
 });
 conn.connect();
 
+app.get("/hapus/:id", (req, res) => {
+  conn.query(
+    "DELETE FROM tbl_transportasi WHERE id_transportasi=?",
+    req.params.id,
+    function(error, results, fields) {
+      if (error) throw error;
+      res.redirect("/transportasi");
+    }
+  );
+});
+
 app.get("/", function(req, res) {
   console.log("GET DATA from tbl_transportation");
   conn.query("SELECT * FROM tbl_transportasi", function(
@@ -52,6 +63,7 @@ app.post("/", function(req, res) {
     tarif_tunai_perKm: req.body.tarif_tunai_perKm,
     tarif_nontunai_perKm: req.body.tarif_nontunai_perKm,
     jumlah_penumpang: req.body.jumlah_penumpang,
+    id_perusahaan: req.body.id_perusahaan,
     deskripsi: req.body.deskripsi
   };
   console.log("POST DATA to tbl_transportation");
@@ -68,23 +80,6 @@ app.post("/", function(req, res) {
     // });
     res.redirect("/transportasi");
   });
-});
-
-app.delete("/:id", (req, res) => {
-  conn.query(
-    "DELETE FROM tbl_transportasi WHERE id_transportasi=?",
-    req.params.id,
-    function(error, results, fields) {
-      if (error) throw error;
-      // return res.send({
-      //   error: false,
-      //   data: results,
-      //   message: "Data dihapus!"
-      // });
-      res.json({ msg: `Data ID:${req.params.id} di hapus!` });
-      res.redirect("/transportasi");
-    }
-  );
 });
 
 app.put("/:id", (req, res) => {
