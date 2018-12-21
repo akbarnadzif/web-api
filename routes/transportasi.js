@@ -1,4 +1,5 @@
 var express = require("express");
+var methodOverride = require("method-override");
 var app = express();
 const bodyParser = require("body-parser");
 app.use(
@@ -24,19 +25,30 @@ app.get("/", function(req, res) {
     fields
   ) {
     if (error) throw error;
+    conn.query("SELECT * FROM tbl_perusahaan", function(
+      error1,
+      results1,
+      fields1
+    ) {
+      res.render("transportasi", {
+        title: "Transportasi",
+        data_trans: results,
+        data_perus: results1
+      });
+    });
     // return res.send({
     //   error: false,
     //   message: "Data Transportasi!",
     //   data: results
     // });
-    res.render("transportasi", { title: "Transportasi", data_trans: results });
   });
 });
 
 app.post("/", function(req, res) {
   var datatransportasi = {
     nama: req.body.nama,
-    rating: req.body.rating,
+    // rating: req.body.rating,
+    rating_aplikasi: req.body.rating_aplikasi,
     tarif_tunai_perKm: req.body.tarif_tunai_perKm,
     tarif_nontunai_perKm: req.body.tarif_nontunai_perKm,
     jumlah_penumpang: req.body.jumlah_penumpang,
@@ -64,11 +76,13 @@ app.delete("/:id", (req, res) => {
     req.params.id,
     function(error, results, fields) {
       if (error) throw error;
-      return res.send({
-        error: false,
-        data: results,
-        message: "Data dihapus!"
-      });
+      // return res.send({
+      //   error: false,
+      //   data: results,
+      //   message: "Data dihapus!"
+      // });
+      res.json({ msg: `Data ID:${req.params.id} di hapus!` });
+      res.redirect("/transportasi");
     }
   );
 });

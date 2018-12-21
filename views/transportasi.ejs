@@ -22,10 +22,12 @@
           <tr>
             <th>ID</th>
             <th>Nama</th>
-            <th>Rating</th>
+            <th>Rating Driver</th>
+            <th>Rating App</th>
             <th>Tarif Tunai</th>
             <th>Tarif nonTunai</th>
             <th>Jumlah Penumpang</th>
+            <th>Perusahaan</th>
             <th>Deskripsi</th>
           </tr>
         </thead>
@@ -34,14 +36,22 @@
           <tr>
             <td><%= data_trans[i].id_transportasi %></td>
             <td><%= data_trans[i].nama %></td>
-            <td><%= data_trans[i].rating %></td>
+            <td><%= data_trans[i].rating_driver %></td>
+            <td><%= data_trans[i].rating_aplikasi %></td>
             <td><%= data_trans[i].tarif_tunai_perKm %></td>
             <td><%= data_trans[i].tarif_nontunai_perKm %></td>
             <td><%= data_trans[i].jumlah_penumpang %></td>
-            <td><%= data_trans[i].deskripsi %></td>
+            <td><%= data_perus[i].nama %></td>
+            <td style="width: 20%"><%= data_trans[i].deskripsi %></td>
             <td>                
-                <button class="waves-effect waves-light btn">Delete</button>
-              </td>
+                <!-- <form action="/transportasi?_method=delete" method="POST">
+                    <input type="hidden" name="id" value="<%= data_trans[i].id %>">
+                    <input type="submit" class="btn btn-primary" 
+                    onclick="setId(<%= JSON.stringify(data_trans[i]) %>)" name="delete" id="delete_trans" value="delete">
+                </form> -->
+                <!-- <button class="waves-effect waves-light btn">Delete</button> -->
+                <input type="submit" name="id_transportasi" class="waves-effect waves-light btn" value="Delete">
+            </td>
           </tr>
           <% } %>
         </tbody>
@@ -53,17 +63,20 @@
       <div id="modal2" class="modal" style="width: 30%">
           <div class="modal-content">
             <h4>Tambah Data <%= title %></h4>
-            <br /><br />
             <div class="row">
               <form method="POST" action="/transportasi">
                   <div class="input-field col s12">
                     <input name="nama" id="nama" type="text" class="validate" />
                     <label for="nama">Nama</label>
                   </div>
+                  <!-- <div class="input-field col s12">
+                    <input name="rating_driver" id="rating_driver" type="text" class="validate" />
+                    <label for="rating_driver">Rating Driver</label>
+                  </div> -->
                   <div class="input-field col s12">
-                    <input name="rating" id="rating" type="text" class="validate" />
-                    <label for="rating">Rating</label>
-                  </div>
+                      <input name="rating_aplikasi" id="rating_aplikasi" type="text" class="validate" />
+                      <label for="rating_aplikasi">Rating Aplikasi</label>
+                    </div>
                   <div class="input-field col s12">
                     <input name="tarif_tunai_perKm" id="tarif_tunai_perKm" type="text" class="validate" />
                     <label for="tarif_tunai_perKm">Tarif Tunai</label>
@@ -79,7 +92,16 @@
                   <div class="input-field col s12">
                     <input name="deskripsi" id="deskripsi" type="text" class="validate" />
                     <label for="deskripsi">Deskripsi</label>
-                      </div>
+                  </div>
+                  <div class="input-field col s12">
+                    <select name="id_perusahaan">
+                      <option value="" disabled selected>Pilih Perusahaan</option>
+                      <% data_perus.forEach(function(data_p, q){ %> 
+                      <option value="<%= data_p.id_perusahaan %>"><%= data_p.nama %></option>
+                      <% }) %>
+                    </select>
+                    <label>Menu Pilihan</label>
+                  </div>
                   <div class="modal-footer">
                     <input class="modal-close waves-effect waves-green btn" type="submit" value="send"
                       >
@@ -92,6 +114,18 @@
             $(document).ready(function() {
               $(".modal").modal();
             });
+            $(document).ready(function(){
+              $('select').formSelect();
+        });
+            function setId(obj){
+                document.getElementById('id_transportasi').value = obj.id_transportasi ;
+                document.getElementById('nama').value = obj.nama ;
+                document.getElementById('rating').value = obj.rating ;
+                document.getElementById('tarif_tunai_perKm').value = obj.tarif_tunai_perKm ;
+                document.getElementById('tarif_nontunai_perKm').value = objtarif_nontunai_perKm ;
+                document.getElementById('jumlah_penumpang').value = obj.jumlah_penumpang ;
+                document.getElementById('deskripsi').value = obj.deskripsi ;
+            }
           </script>
     </div>
   </body>

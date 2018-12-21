@@ -14,7 +14,25 @@ var transaksiRouter = require("./routes/transaksi");
 var dataDriverRouter = require("./routes/datadriver");
 var dataTarifRouter = require("./routes/datatarif");
 var transportasiRouter = require("./routes/transportasi");
+const mysql = require("mysql");
+const conn = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "db_transportasi"
+});
+conn.connect();
 
+app.get("/fuzzy", function(req, res) {
+  conn.query(
+    "SELECT nama, (rating_driver+rating_aplikasi)/2 rating, tarif_tunai_perKm, tarif_nontunai_perKm from tbl_transportasi",
+    function(error, results, fields) {
+      if (error) throw error;
+      console.log(results);
+      res.send("HALOO");
+    }
+  );
+});
 app.use("/index", indexRouter);
 app.use("/driver", driverRouter);
 app.use("/tarif", tarifRouter);

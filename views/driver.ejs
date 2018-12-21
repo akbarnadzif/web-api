@@ -15,7 +15,7 @@
       <a href="/transportasi" class="waves-effect waves-light btn"
         >Data Transportasi</a
       >
-      <br /><br /><br />
+      <br /><br />
       
       <!-- <h3>Data Tarif</h3> -->
       <table>
@@ -25,8 +25,8 @@
             <th>Nama</th>
             <th>Usia</th>
             <th>Rating Driver</th>
-            <th>Rating Aplikasi</th>
             <th>Plat Nomer</th>
+            <th>Transportasi</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -37,10 +37,10 @@
             <td><%= data_driver[i].nama %></td>
             <td><%= data_driver[i].usia %></td>
             <td><%= data_driver[i].rating_driver %></td>
-            <td><%= data_driver[i].rating_aplikasi %></td>
             <td><%= data_driver[i].plat_nomor %></td>
+            <td><%= data_driver[i].id_transportasi %></td>
             <td>
-              <button class="waves-effect waves-light btn">Delete</button>
+              <a href="/driver/hapus/<%= data_driver[i].id_data_driver %>" class="waves-effect waves-light btn">Delete</a>
             </td>
           </tr>
           <% } %>
@@ -62,7 +62,7 @@
       <div id="modal1" class="modal" style="width: 30%">
         <div class="modal-content">
           <h4>Tambah Data Driver</h4>
-          <br /><br />
+          <br />
           <div class="row">
             <form method="POST" action="/driver">
                 <div class="input-field col s12">
@@ -77,13 +77,19 @@
                   <input name="rating_driver" id="rating_driver" type="text" class="validate" />
                   <label for="rating_driver">Rating Driver</label>
                 </div>
-                <div class="input-field col s12">
-                  <input name="rating_aplikasi" id="rating_aplikasi" type="text" class="validate" />
-                  <label for="rating_aplikasi">Rating Aplikasi</label>
-                </div>
+              
                 <div class="input-field col s12">
                   <input name="plat_nomor" id="plat_nomor" type="text" class="validate" />
                   <label for="plat_nomor">Plat Nomor</label>
+                </div>
+                <div class="input-field col s12">
+                  <select name="id_transportasi">
+                    <option value="" disabled selected>Pilih Transportasi</option>
+                    <% data_trans.forEach(function(data, q){ %> 
+                    <option value="<%= data.id_transportasi %>"><%= data.nama %></option>
+                    <% }) %>
+                  </select>
+                  <label>Menu Pilihan</label>
                 </div>
                 <div class="modal-footer">
                   <input class="modal-close waves-effect waves-green btn" type="submit" value="send"

@@ -26,6 +26,7 @@
             <th>Jarak</th>
             <th>Tarif Tunai</th>
             <th>Tarif Non Tunai</th>
+            <th>ID Trans</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +38,7 @@
             <td><%= data_tarif[i].jarak %></td>
             <td><%= data_tarif[i].tarif_tunai %></td>
             <td><%= data_tarif[i].tarif_nontunai %></td>
+            <td><%= data_tarif[i].id_transportasi %></td>
             <td>                
                 <button class="waves-effect waves-light btn">Delete</button>
               </td>
@@ -73,6 +75,10 @@
                   <div class="input-field col s12">
                     <input name="tarif_nontunai" id="tarif_nontunai" type="text" class="validate" />
                     <label for="tarif_nontunai">Tarif Nontunai</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="id_transportasi" id="id_transportasi" type="text" class="validate" />
+                    <label for="id_transportasi">ID Transportasi</label>
                   </div>
                   <div class="modal-footer">
                     <input class="modal-close waves-effect waves-green btn" type="submit" value="send"

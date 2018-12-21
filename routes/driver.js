@@ -16,20 +16,46 @@ const conn = mysql.createConnection({
 });
 conn.connect();
 
+app.get("/hapus/:id", (req, res) => {
+  conn.query(
+    "DELETE FROM tbl_data_driver WHERE id_data_driver=?",
+    req.params.id,
+    function(error, results, fields) {
+      if (error) throw error;
+      // return res.send({
+      //   error: false,
+      //   data: results,
+      //   message: "Data dihapus!"
+      // });
+      res.redirect("/driver");
+    }
+  );
+});
+
 app.get("/", function(req, res) {
   console.log("Test Dashboard Driver");
   // res.render("driver", { title: "Input Data Driver" });
   conn.query("SELECT * FROM tbl_data_driver", function(error, results, fields) {
     if (error) throw error;
+    conn.query("SELECT * FROM tbl_transportasi", function(
+      error1,
+      results1,
+      fields1
+    ) {
+      res.render("driver", {
+        title: "Driver",
+        data_driver: results,
+        data_trans: results1
+      });
+    });
     // return res.send({
     //   error: false,
     //   data: results,
     //   message: "Data Driver!"
     // });
-    res.render("driver", { title: "Driver", data_driver: results });
   });
 });
-app.get("/trans", function(req, res) {
+app.get("/", function(req, res) {
   console.log("GET DATA from tbl_transportation");
   conn.query("SELECT * FROM tbl_transportasi", function(
     error,
@@ -50,8 +76,8 @@ app.post("/", function(req, res) {
     nama: req.body.nama,
     usia: req.body.usia,
     rating_driver: req.body.rating_driver,
-    rating_aplikasi: req.body.rating_aplikasi,
     plat_nomor: req.body.plat_nomor,
+    id_transportasi: req.body.id_transportasi,
     createdAt: new Date()
   };
   // var ojol = { id: "3", nama: "Mas Ali" };
@@ -61,6 +87,17 @@ app.post("/", function(req, res) {
     fields
   ) {
     if (error) throw error;
+    conn.query(
+      `update tbl_transportasi 
+      INNER JOIN 
+      (SELECT avg(tbl_data_driver.rating_driver) rating_driver,id_transportasi from tbl_data_driver) as x 
+      on x.id_transportasi = tbl_transportasi.id_transportasi 
+      set tbl_transportasi.rating_driver=x.rating_driver`,
+      function(error2, results2, fields2) {
+        if (error2) throw error2;
+        res.redirect("/driver");
+      }
+    );
     // return res.send({
     //   error: false,
     //   data: "Data Berhasil di masukkan!",
@@ -69,22 +106,7 @@ app.post("/", function(req, res) {
     // res.header({ "Content-Type": "text/plain" }, 0);
 
     // res.render("driver", { data_driver: results });
-    res.redirect("/driver");
   });
 });
 
-// app.delete("/:id", (req, res) => {
-//   conn.query(
-//     "DELETE FROM tbl_data_driver WHERE id_data_driver=?",
-//     req.params.id,
-//     function(error, results, fields) {
-//       if (error) throw error;
-//       return res.send({
-//         error: false,
-//         data: results,
-//         message: "Data dihapus!"
-//       });
-//     }
-//   );
-// });
 module.exports = app;
