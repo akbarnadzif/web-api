@@ -20,13 +20,14 @@
       <table>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>No</th>
             <th>Nama</th>
+            <th>ID</th>
             <th>Rating Driver</th>
             <th>Rating App</th>
             <th>Tarif Tunai</th>
             <th>Tarif nonTunai</th>
-            <th>Jumlah Penumpang</th>
+            <th>Jml Pumpng</th>
             <th>Perusahaan</th>
             <th>Deskripsi</th>
           </tr>
@@ -34,14 +35,15 @@
         <tbody>
           <% for(var i=0;i<data_trans.length;i++) { %>
           <tr>
-            <td><%= data_trans[i].id_transportasi %></td>
+            <td><%= [i+1] %></td>
             <td><%= data_trans[i].nama %></td>
+            <td><%= data_trans[i].id_transportasi %></td>
             <td><%= data_trans[i].rating_driver %></td>
             <td><%= data_trans[i].rating_aplikasi %></td>
             <td><%= data_trans[i].tarif_tunai_perKm %></td>
             <td><%= data_trans[i].tarif_nontunai_perKm %></td>
             <td><%= data_trans[i].jumlah_penumpang %></td>
-            <td><%= data_perus[i].nama %></td>
+            <td><%= data_trans[i].id_perusahaan %></td>
             <td style="width: 20%"><%= data_trans[i].deskripsi %></td>
             <td>                
                 <a href="/transportasi/hapus/<%= data_trans[i].id_transportasi %>" class="waves-effect waves-light btn">Delete</a>
@@ -53,7 +55,8 @@
       <br />
       <a class="waves-effect waves-light btn modal-trigger" href="#modal2"
       >Tambah</a
-    >      <!-- Modal Structure -->
+    ><br><br>      
+    <!-- Modal Structure -->
       <div id="modal2" class="modal" style="width: 30%">
           <div class="modal-content">
             <h4>Tambah Data <%= title %></h4>
