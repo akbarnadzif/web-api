@@ -89,6 +89,7 @@ for (i = 0; i < data.length; i++) {
   console.log(sum_hargakual[i]);
 }
 
+//Mengalikan harga singleton
 for (i = 0; i < data.length; i++) {
   kalisingleton[i] = [];
   for (j = 0; j < 5; j++) {
@@ -98,7 +99,8 @@ for (i = 0; i < data.length; i++) {
     }
   }
 }
-// console.log("KALISINGLETON :" + kalisingleton[0]);
+
+//console.log("KALISINGLETON :" + kalisingleton[0]);
 //KALI 2 ARRAY
 for (i = 0; i < data.length; i++) {
   sum_hargakualsingleton[i] = arrSum(kalisingleton[i]);
@@ -109,7 +111,30 @@ for (i = 0; i < data.length; i++) {
 console.log("\nHASIL AKHIR :");
 for (i = 0; i < data.length; i++) {
   outputakhir[i] = sum_hargakualsingleton[i] / sum_hargakual[i];
-  console.log(data[i][0] + ":" + outputakhir[i]);
+  // console.log(data[i][0] + ":" + outputakhir[i]);
+}
+
+var temp_datanama_nilaifuzzy = [];
+for (i = 0; i < outputakhir.length; i++) {
+  // console.log([i + 1] + "." + data[i][0] + ":" + simpan_sort_outputakhir[i]);
+  temp_datanama_nilaifuzzy.push({
+    nama: data[i][0],
+    nilai_fuzzy: outputakhir[i]
+  });
+}
+temp_datanama_nilaifuzzy.sort(function(a, b) {
+  return a.nilai_fuzzy - b.nilai_fuzzy;
+});
+// console.log(temp_datanama_nilaifuzzy);
+
+for (i = 0; i < temp_datanama_nilaifuzzy.length; i++) {
+  console.log(
+    [i + 1] +
+      " " +
+      temp_datanama_nilaifuzzy[i].nama +
+      " : " +
+      temp_datanama_nilaifuzzy[i].nilai_fuzzy
+  );
 }
 
 function segitiga(x, a, b, c, ket) {
