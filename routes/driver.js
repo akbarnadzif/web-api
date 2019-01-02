@@ -33,27 +33,32 @@ app.get("/hapus/:id", (req, res) => {
 });
 
 app.get("/", function(req, res) {
-  console.log("Get data driver!!");
+  console.log("Get data driver!!!");
   // res.render("driver", { title: "Input Data Driver" });
-  conn.query("SELECT * FROM tbl_data_driver", function(error, results, fields) {
-    if (error) throw error;
-    conn.query("SELECT * FROM tbl_transportasi", function(
-      error1,
-      results1,
-      fields1
-    ) {
-      res.render("driver", {
-        title: "Driver",
-        data_driver: results,
-        data_trans: results1
+  conn.query(
+    `SELECT tbl_transportasi.nama as nama_transportasi, tbl_data_driver.* FROM tbl_data_driver LEFT JOIN tbl_transportasi 
+  ON tbl_transportasi.id_transportasi=tbl_data_driver.id_transportasi ORDER BY id_transportasi`,
+    function(error, results, fields) {
+      if (error) throw error;
+      conn.query("SELECT * FROM tbl_transportasi", function(
+        error1,
+        results1,
+        fields1
+      ) {
+        res.render("driver", {
+          title: "Driver",
+          data_driver: results,
+          data_trans: results1
+        });
+        console.log(results1);
       });
-    });
-    // return res.send({
-    //   error: false,
-    //   data: results,
-    //   message: "Data Driver!"
-    // });
-  });
+      // return res.send({
+      //   error: false,
+      //   data: results,
+      //   message: "Data Driver!"
+      // });
+    }
+  );
 });
 app.get("/", function(req, res) {
   console.log("GET DATA from tbl_transportation");
@@ -87,17 +92,23 @@ app.post("/", function(req, res) {
     fields
   ) {
     if (error) throw error;
-    conn.query(
-      `UPDATE tbl_transportasi 
-      INNER JOIN 
-      (SELECT avg(tbl_data_driver.rating_driver) rating_driver,id_transportasi from tbl_data_driver) as x 
-      on x.id_transportasi = tbl_transportasi.id_transportasi 
-      set tbl_transportasi.rating_driver=x.rating_driver`,
-      function(error2, results2, fields2) {
-        if (error2) throw error2;
-        res.redirect("/driver");
-      }
-    );
+    res.redirect("/driver");
+    // return res.render({
+    //   error: false,
+    //   data: "Data Berhasil di masukkan!",
+    //   json: datadriver
+    // });
+    // conn.query(
+    //   `UPDATE tbl_transportasi
+    //   LEFT JOIN
+    //   (SELECT avg(tbl_data_driver.rating_driver) rating_driver,id_transportasi from tbl_data_driver group by id_transportasi) as x
+    //   on x.id_transportasi = tbl_transportasi.id_transportasi
+    //   set tbl_transportasi.rating_driver=x.rating_driver`,
+    //   function(error2, results2, fields2) {
+    //     if (error2) throw error2;
+    //     res.redirect("/driver");
+    //   }
+    // );
     // return res.send({
     //   error: false,
     //   data: "Data Berhasil di masukkan!",
@@ -110,3 +121,4 @@ app.post("/", function(req, res) {
 });
 
 module.exports = app;
+// CREATE TRIGGER `after_insert_data_driver` AFTER INSERT ON `tbl_data_driver` FOR EACH ROW UPDATE tbl_transportasi INNER JOIN (SELECT avg(tbl_data_driver.rating_driver) rating_driver,id_transportasi from tbl_data_driver) as x on x.id_transportasi = tbl_transportasi.id_transportasi set tbl_transportasi.rating_driver=x.rating_driver

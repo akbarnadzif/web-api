@@ -6,6 +6,7 @@ var path = require("path");
 var ejs = require("ejs");
 var methodOverride = require("method-override");
 
+var indexFuzzy = require("./fuzzy");
 var indexRouter = require("./routes/index");
 var driverRouter = require("./routes/driver");
 var tarifRouter = require("./routes/tarif");
@@ -23,16 +24,18 @@ const conn = mysql.createConnection({
 });
 conn.connect();
 
-app.get("/fuzzy", function(req, res) {
-  conn.query(
-    "SELECT nama, (rating_driver+rating_aplikasi)/2 rating, tarif_tunai_perKm, tarif_nontunai_perKm from tbl_transportasi",
-    function(error, results, fields) {
-      if (error) throw error;
-      console.log(results);
-      res.send("HALOO");
-    }
-  );
-});
+// app.get("/fuzzy", function(req, res) {
+//   conn.query(
+//     "SELECT nama, (rating_driver+rating_aplikasi)/2 rating, tarif_tunai_perKm, tarif_nontunai_perKm from tbl_transportasi",
+//     function(error, results, fields) {
+//       if (error) throw error;
+//       console.log(results);
+//       res.json(results);
+//     }
+//   );
+// });
+
+app.use("/fuzzy", indexFuzzy);
 app.use("/index", indexRouter);
 app.use("/driver", driverRouter);
 app.use("/tarif", tarifRouter);
@@ -66,6 +69,8 @@ module.exports = app;
 //   password: "",
 //   database: "transaksi"
 // });
+
+// 4.83911
 
 // conn.connect();
 // app.get("/trans", function(req, res) {
