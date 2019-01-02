@@ -28,7 +28,7 @@ app.get("/hapus/:id", (req, res) => {
 });
 
 app.get("/", function(req, res) {
-  console.log("Test Dashboard Tarif");
+  console.log("Get data tarif!!!");
   conn.query("SELECT * FROM tbl_data_tarif", function(error, results, fields) {
     if (error) throw error;
     conn.query("SELECT * FROM tbl_transportasi", function(

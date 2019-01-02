@@ -28,8 +28,32 @@ app.get("/hapus/:id", (req, res) => {
   );
 });
 
+//GET DATA TRANSPORTASION for ANDROID
+app.get("/api", function(req, res) {
+  console.log("GET data transportastion!!!");
+  conn.query("SELECT * FROM tbl_transportasi", function(
+    error,
+    results,
+    fields
+  ) {
+    if (error) throw error;
+    conn.query("SELECT * FROM tbl_perusahaan", function(
+      error1,
+      results1,
+      fields1
+    ) {
+      return res.send({
+        error: false,
+        message: "Data Transportasi!",
+        data: results
+      });
+    });
+  });
+});
+
+//GET DATA TRANSPORTASION for WEB
 app.get("/", function(req, res) {
-  console.log("GET DATA from tbl_transportation");
+  console.log("GET data transportastion!!!");
   conn.query("SELECT * FROM tbl_transportasi", function(
     error,
     results,

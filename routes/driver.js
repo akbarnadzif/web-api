@@ -33,7 +33,7 @@ app.get("/hapus/:id", (req, res) => {
 });
 
 app.get("/", function(req, res) {
-  console.log("Test Dashboard Driver");
+  console.log("Get data driver!!");
   // res.render("driver", { title: "Input Data Driver" });
   conn.query("SELECT * FROM tbl_data_driver", function(error, results, fields) {
     if (error) throw error;

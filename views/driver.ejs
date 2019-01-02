@@ -1,5 +1,6 @@
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
@@ -9,7 +10,8 @@
   </head>
   <body>
     <div class="container">
-      <h1>Input Data Driver</h1>
+      <h3>Input Data Driver</h3>
+      <a href="/index" class="waves-effect waves-light btn right" style="width: 8%"><i class="material-icons">home</i></a>
       <a href="/driver" class="waves-effect waves-light btn">Data Driver</a>
       <a href="/tarif" class="waves-effect waves-light btn">Data Tarif</a>
       <a href="/transportasi" class="waves-effect waves-light btn"
@@ -22,7 +24,7 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>ID</th>
+            <!-- <th>ID</th> -->
             <th>Nama</th>
             <th>Usia</th>
             <th>Rating Driver</th>
@@ -35,7 +37,7 @@
           <% for(var i=0;i<data_driver.length;i++) { %>
           <tr>
             <td><%= [i+1] %></td>
-            <td><%= data_driver[i].id_data_driver %></td>
+            <!-- <td><%= data_driver[i].id_data_driver %></td> -->
             <td><%= data_driver[i].nama %></td>
             <td><%= data_driver[i].usia %></td>
             <td><%= data_driver[i].rating_driver %></td>

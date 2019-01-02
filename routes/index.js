@@ -2,8 +2,8 @@ var express = require("express");
 var app = express();
 
 app.get("/", function(req, res) {
-    console.log("TEST INDEX");
-    res.render("index", { title: "Halaman Input Data" });
+  console.log("TEST INDEX");
+  res.render("index", { title: "Halaman Dashboard" });
 });
 module.exports = app;
 
