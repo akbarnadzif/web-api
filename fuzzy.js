@@ -23,27 +23,27 @@ app.get("/", function(req, res) {
     "SELECT nama, (rating_driver+rating_aplikasi)/2 rating, tarif_tunai_perKm, tarif_nontunai_perKm from tbl_transportasi",
     function(error, results, fields) {
       if (error) throw error;
-      var data = [];
-      results.forEach(function(o, key) {
-        console.log(o);
-        data.push([o.nama, o.rating_driver, o.harga_tunai_perKm]);
-      });
-      // console.log(results);
-      // var data = [
-      //   ["goride", 4.4, 1600],
-      //   ["gocar", 4.4, 4100],
-      //   ["gocarlarge", 4.4, 4800],
-      //   ["gobluebird", 4.4, 5300],
-      //   ["grabbike", 4.4, 1600],
-      //   ["grabcar", 4.4, 3800],
-      //   ["grabcar6", 4.4, 4500],
-      //   ["grabtaxi", 4.4, 5200],
-      //   ["mybluebird", 3.7, 6000],
-      //   ["mybluebirdvan", 3.7, 5000],
-      //   ["bajaj", 3.6, 4000],
-      //   ["bangjek", 3.4, 1600],
-      //   ["okejack", 4.0, 2000]
-      // ];
+      // var data = [];
+      // results.forEach(function(o, key) {
+      //   console.log(o);
+      //   data.push([o.nama, o.rating_driver, o.harga_tunai_perKm]);
+      // });
+      console.log(results);
+      var data = [
+        ["goride", 4.4, 1600],
+        ["gocar", 4.4, 4100],
+        ["gocarlarge", 4.4, 4800],
+        ["gobluebird", 4.4, 5300],
+        ["grabbike", 4.4, 1600],
+        ["grabcar", 4.4, 3800],
+        ["grabcar6", 4.4, 4500],
+        ["grabtaxi", 4.4, 5200],
+        ["mybluebird", 3.7, 6000],
+        ["mybluebirdvan", 3.7, 5000],
+        ["bajaj", 3.6, 4000],
+        ["bangjek", 3.4, 1600],
+        ["okejack", 4.0, 2000]
+      ];
 
       var a = 0,
         b = 3,
@@ -52,7 +52,7 @@ app.get("/", function(req, res) {
         e = 4.5,
         f = 5;
       var a1 = 0,
-        b1 = 100,
+        b1 = 1000,
         c1 = 2000,
         d1 = 4000,
         e1 = 6000,
@@ -143,10 +143,12 @@ app.get("/", function(req, res) {
         // console.log(data[i][0] + ":" + outputakhir[i]);
       }
 
+      // PRINT HASIL AKHIR 2
       var temp_datanama_nilaifuzzy = [];
       for (i = 0; i < outputakhir.length; i++) {
         // console.log([i + 1] + "." + data[i][0] + ":" + simpan_sort_outputakhir[i]);
         temp_datanama_nilaifuzzy.push({
+          No: [i + 1],
           nama: data[i][0],
           nilai_fuzzy: outputakhir[i]
         });

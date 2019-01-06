@@ -22,7 +22,18 @@ app.get("/hapus/:id", (req, res) => {
     req.params.id,
     function(error, results, fields) {
       if (error) throw error;
-      res.redirect("/tarif");
+      conn.query(
+        `UPDATE tbl_transportasi
+        LEFT JOIN
+        (SELECT ROUND(avg(tbl_data_tarif.tarif_tunai/tbl_data_tarif.jarak),-1) tarif_tunai,id_transportasi from tbl_data_tarif group by id_transportasi) as x
+        on x.id_transportasi = tbl_transportasi.id_transportasi
+        set tbl_transportasi.tarif_tunai_perKm=x.tarif_tunai`,
+        function(error2, results2, fields2) {
+          if (error2) throw error2;
+          res.redirect("/tarif");
+        }
+      );
+      // res.redirect("/tarif");
     }
   );
 });
@@ -61,10 +72,26 @@ app.post("/", function(req, res) {
     fields
   ) {
     if (error) throw error;
-    res.redirect("/tarif");
+    conn.query(
+      `UPDATE tbl_transportasi
+      LEFT JOIN
+      (SELECT ROUND(avg(tbl_data_tarif.tarif_tunai/tbl_data_tarif.jarak),-1) tarif_tunai,id_transportasi from tbl_data_tarif group by id_transportasi) as x
+      on x.id_transportasi = tbl_transportasi.id_transportasi
+      set tbl_transportasi.tarif_tunai_perKm=x.tarif_tunai`,
+      function(error2, results2, fields2) {
+        if (error2) throw error2;
+        res.redirect("/tarif");
+      }
+    );
+    // res.redirect("/tarif");
   });
 });
 
+// UPDATE tbl_transportasi
+//        LEFT JOIN
+//        (SELECT avg(tbl_data_driver.rating_driver) rating_driver,id_transportasi from tbl_data_driver group by id_transportasi) as x
+//        on x.id_transportasi = tbl_transportasi.id_transportasi
+//        set tbl_transportasi.rating_driver=x.rating_driver
 // app.get("/", function(req, res) {
 //   console.log("TEST INDEX");
 //   res.render("tarif", { title: "Input Data Tarif" });
