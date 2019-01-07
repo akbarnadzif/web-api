@@ -20,27 +20,36 @@ conn.connect();
 console.log("Fuzzy!!!");
 app.get("/", function(req, res) {
   conn.query(
-    "SELECT nama, (rating_driver+rating_aplikasi)/2 rating, tarif_tunai_perKm, tarif_nontunai_perKm from tbl_transportasi",
+    "SELECT nama, (rating_driver+rating_aplikasi)/2 rating, tarif_tunai_perKm tariftunai, tarif_nontunai_perKm tarifnontunai, jumlah_penumpang, deskripsi, deskripsi2 from tbl_transportasi",
     function(error, results, fields) {
       if (error) throw error;
-      // var data = [];
-      // results.forEach(function(o, key) {
-      //   console.log(o);
-      //   data.push([o.nama, o.rating_driver, o.harga_tunai_perKm]);
-      // });
-      console.log(results);
-      var data = [
-        ["goride", 4.4, 1600],
-        ["gocar", 4.4, 4100],
-        ["gocarlarge", 4.4, 4800],
-        ["gobluebird", 4.4, 5300],
-        ["grabbike", 4.4, 1600],
-        ["grabcar", 4.4, 3800],
-        ["grabcar6", 4.4, 4500],
-        ["grabtaxi", 4.4, 5200],
-        ["mybluebird", 3.7, 6000],
-        ["mybluebirdvan", 3.7, 5000]
-      ];
+      var data = [];
+      results.forEach(function(o, key) {
+        console.log(o);
+        data.push([
+          o.nama,
+          o.rating,
+          o.tariftunai,
+          o.tarifnontunai,
+          o.jumlah_penumpang,
+          o.deskripsi,
+          o.deskripsi2
+        ]);
+      });
+      console.log("this is result :" + data);
+
+      // var data = [
+      //   ["goride", 4.4, 1600],
+      //   ["gocar", 4.4, 4100],
+      //   ["gocarlarge", 4.4, 4800],
+      //   ["gobluebird", 4.4, 5300],
+      //   ["grabbike", 4.4, 1600],
+      //   ["grabcar", 4.4, 3800],
+      //   ["grabcar6", 4.4, 4500],
+      //   ["grabtaxi", 4.4, 5200],
+      //   ["mybluebird", 3.7, 6000],
+      //   ["mybluebirdvan", 3.7, 5000]
+      // ];
 
       var a = 0,
         b = 3,
@@ -82,7 +91,7 @@ app.get("/", function(req, res) {
         kual_ojol[i][2] = segitiga(data[i][1], c, d, e, "Sedang");
         kual_ojol[i][3] = segitiga(data[i][1], d, e, f, "Baik");
         kual_ojol[i][4] = trapesiumkanan(data[i][1], e, f, "Sangat Baik");
-        console.log("DATA Fuzzy KUALITAS" + i + " :" + kual_ojol[i]);
+        console.log("DATA Fuzzy KUALITAS :" + i + " :" + kual_ojol[i]);
       }
 
       //Cek pembobotan HARGA
@@ -95,7 +104,8 @@ app.get("/", function(req, res) {
         harga_ojol[i][2] = segitiga(data[i][2], c1, d1, e1, "Sedang");
         harga_ojol[i][3] = segitiga(data[i][2], b1, c1, d1, "Murah");
         harga_ojol[i][4] = trapesiumkiri(data[i][2], b1, c1, "Sangat Murah");
-        console.log("DATA Fuzzy HARGA" + i + " :" + harga_ojol[i]);
+        console.log("DATA Fuzzy HARGA :" + i + " :" + harga_ojol[i]);
+        console.log(" ");
       }
 
       //Cek TAHAP MIX
@@ -112,7 +122,7 @@ app.get("/", function(req, res) {
       //Hitung JUMLAH
       for (i = 0; i < data.length; i++) {
         sum_hargakual[i] = arrSum(harga_kual[i]);
-        console.log(sum_hargakual[i]);
+        console.log("sum_harga_kualitas :" + sum_hargakual[i]);
       }
 
       //Mengalikan harga singleton
@@ -130,7 +140,9 @@ app.get("/", function(req, res) {
       //KALI 2 ARRAY
       for (i = 0; i < data.length; i++) {
         sum_hargakualsingleton[i] = arrSum(kalisingleton[i]);
-        console.log(sum_hargakualsingleton[i]);
+        console.log(
+          "sum_hargakualitas_singleton :" + sum_hargakualsingleton[i]
+        );
       }
 
       // PRINT HASIL AKHIR
@@ -145,9 +157,14 @@ app.get("/", function(req, res) {
       for (i = 0; i < outputakhir.length; i++) {
         // console.log([i + 1] + "." + data[i][0] + ":" + simpan_sort_outputakhir[i]);
         temp_datanama_nilaifuzzy.push({
-          No: [i + 1],
+          no: i + 1,
           nama: data[i][0],
-          nilai_fuzzy: outputakhir[i]
+          nilai_fuzzy: outputakhir[i],
+          tariftunai_per_km: data[i][2],
+          tarifnontunai_per_km: data[i][3],
+          jumlah_penumpang: data[i][4],
+          deskripsi: data[i][5],
+          deskripsi2: data[i][6]
         });
       }
       temp_datanama_nilaifuzzy.sort(function(a, b) {
@@ -155,6 +172,7 @@ app.get("/", function(req, res) {
       });
       // console.log(temp_datanama_nilaifuzzy);
 
+      //PRINT DATA AKHIR
       for (i = 0; i < temp_datanama_nilaifuzzy.length; i++) {
         console.log(
           [i + 1] +
