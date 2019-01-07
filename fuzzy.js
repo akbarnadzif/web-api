@@ -39,10 +39,7 @@ app.get("/", function(req, res) {
         ["grabcar6", 4.4, 4500],
         ["grabtaxi", 4.4, 5200],
         ["mybluebird", 3.7, 6000],
-        ["mybluebirdvan", 3.7, 5000],
-        ["bajaj", 3.6, 4000],
-        ["bangjek", 3.4, 1600],
-        ["okejack", 4.0, 2000]
+        ["mybluebirdvan", 3.7, 5000]
       ];
 
       var a = 0,

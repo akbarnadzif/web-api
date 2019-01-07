@@ -40,20 +40,24 @@ app.get("/hapus/:id", (req, res) => {
 
 app.get("/", function(req, res) {
   console.log("Get data tarif!!!");
-  conn.query("SELECT * FROM tbl_data_tarif", function(error, results, fields) {
-    if (error) throw error;
-    conn.query("SELECT * FROM tbl_transportasi", function(
-      error1,
-      results1,
-      fields1
-    ) {
-      res.render("tarif", {
-        title: "Tarif",
-        data_tarif: results,
-        data_trans: results1
+  conn.query(
+    `SELECT tbl_transportasi.nama as nama_transportasi, tbl_data_tarif.* FROM tbl_data_tarif LEFT JOIN tbl_transportasi 
+  ON tbl_transportasi.id_transportasi=tbl_data_tarif.id_transportasi ORDER BY id_transportasi`,
+    function(error, results, fields) {
+      if (error) throw error;
+      conn.query("SELECT * FROM tbl_transportasi", function(
+        error1,
+        results1,
+        fields1
+      ) {
+        res.render("tarif", {
+          title: "Tarif",
+          data_tarif: results,
+          data_trans: results1
+        });
       });
-    });
-  });
+    }
+  );
 });
 
 app.post("/", function(req, res) {
