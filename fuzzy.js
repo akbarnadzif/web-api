@@ -159,6 +159,7 @@ app.get("/", function(req, res) {
         temp_datanama_nilaifuzzy.push({
           no: i + 1,
           nama: data[i][0],
+          rating: data[i][1],
           nilai_fuzzy: outputakhir[i],
           tariftunai_per_km: data[i][2],
           tarifnontunai_per_km: data[i][3],
@@ -170,16 +171,16 @@ app.get("/", function(req, res) {
       temp_datanama_nilaifuzzy.sort(function(a, b) {
         return a.nilai_fuzzy - b.nilai_fuzzy;
       });
+      var data_lima = [];
+      for (i = 0; i < 5; i++) {
+        data_lima.push(temp_datanama_nilaifuzzy[i]);
+      }
       // console.log(temp_datanama_nilaifuzzy);
 
       //PRINT DATA AKHIR
-      for (i = 0; i < temp_datanama_nilaifuzzy.length; i++) {
+      for (i = 0; i < 5; i++) {
         console.log(
-          [i + 1] +
-            " " +
-            temp_datanama_nilaifuzzy[i].nama +
-            " : " +
-            temp_datanama_nilaifuzzy[i].nilai_fuzzy
+          [i + 1] + " " + data_lima[i].nama + " : " + data_lima[i].nilai_fuzzy
         );
       }
 
@@ -218,7 +219,9 @@ app.get("/", function(req, res) {
         });
         return sum;
       }
-      res.json(temp_datanama_nilaifuzzy);
+      res.json({
+        data: data_lima
+      });
     }
   );
 });
